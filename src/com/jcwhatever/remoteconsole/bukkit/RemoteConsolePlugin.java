@@ -85,6 +85,7 @@ public class RemoteConsolePlugin extends NucleusPlugin {
         Bukkit.getLogger().addHandler(_logHandler);
 
         registerCommands(new Dispatcher(this));
+        registerEventListeners(new BukkitListener());
     }
 
     @Override
