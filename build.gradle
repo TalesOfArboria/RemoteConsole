@@ -251,6 +251,7 @@ dependencies {
 // output jar manifest
 def manifestAttr = manifest {
     attributes("Built-By": buildBy,
+            "Main-Class": "com.jcwhatever.remoteconsole.Main",
             "Created-By": System.properties['java.vm.version'] + " (" + System.properties['java.vm.vendor'] + ")",
             "Implementation-Title": projectName,
             "Implementation-Version": version)
