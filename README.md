@@ -4,17 +4,9 @@ A simple remote console for Bukkit/Spigot servers designed to aid in debugging p
 The gradle file included with the source can be used to build the jar file. The output jar file is both a Bukkit/Spigot plugin and a console program.
 
 ## Installing on your Bukkit/Spigot server
- * Include a copy of the jar file in your servers 'plugins' folder and start the server to create the 'plugins/RemoteConsole' folder and create an empty config.yml file.
- * Turn off the server. Alternatively, you can manually create the 'plugins/RemoteConsole' folder and config.yml file.
- 
- * Open the config.yml file and add the following (No tabs, follow YAML file conventions)
+ * Include a copy of the jar file in your servers 'plugins' folder and start the server.
 
-        servers:
-          servername:
-            address: 'your ip address'
-            port: portNumber`
-
-`servername` can be whatever you want to name your computer. The `address` is the ip address of your computer. `port` is the port number that your RemoteConsole server will be listening on.
+ * Create a new connection to your computer using the following chat command: `/rcon add <computerName> <address> <port>` where `computerName` is a unique name for the connection, `address` is the IP that the remote console on your computer can be reached at, and `port` is the port number your remote console will be listening on.
 
 ## Running the RemoteConsole server on your computer
  * Include a copy of the jar file on your local computer and open a command prompt or shell in the same folder.
@@ -23,12 +15,26 @@ The gradle file included with the source can be used to build the jar file. The 
  
  * Make sure your port forwarding is properly setup to forward the connection from your router to your computer.
  
-And last but not least, don't forget to turn your Minecraft server back on. =p 
+## Connect to remote console from Bukkit/Spigot server
+After you have setup your local RemoteConsole server and your remote Bukkit/Spigot server, you simply need to run the following command from the Bukkit/Spigot server to connect: `/rcon connect <computerName>` where `computerName` is the name you assigned when you added the connection.
 
-## Plugin Dependencies
+## Other commands
+
+If you need the connection to auto connect when the Bukkit/Spigot server starts, use the following command: `/rcon startup <computerName> true`
+
+If you need to list the current stored remote consoles: `/rcon list`
+
+Delete a remote console: `/rcon del <computerName>`
+
+Disconnect from a remote console `/rcon disconnect <computerName>`
+
+## Build dependencies
+See the [gradle script](https://github.com/JCThePants/RemoteConsole/blob/master/build.gradle) for build dependencies.
+
+## Plugin dependencies
  * [NucleusFramework](https://github.com/JCThePants/NucleusFramework)
- 
-## Console Dependencies
+
+## Console dependencies
  * None
 
 
