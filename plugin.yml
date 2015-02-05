@@ -3,3 +3,9 @@ author: JCThePants
 main: com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin
 version: 0.0-beta
 depend: [NucleusFramework]
+commands:
+    remoteconsole:
+        aliases: [rcon, remote, console, rconsole]
+        description: Base command for RemoteConsole
+        usage: |
+            ERROR!

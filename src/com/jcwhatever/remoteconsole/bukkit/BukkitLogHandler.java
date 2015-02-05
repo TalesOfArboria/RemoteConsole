@@ -1,11 +1,10 @@
 package com.jcwhatever.remoteconsole.bukkit;
 
 import com.jcwhatever.nucleus.utils.PreCon;
+import com.jcwhatever.remoteconsole.bukkit.connect.ConnectionManager;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
@@ -15,7 +14,7 @@ import java.util.logging.LogRecord;
 public class BukkitLogHandler  extends Handler {
 
     private final ConnectionManager _manager;
-    private final SimpleDateFormat _dateFormatter = new SimpleDateFormat("HH:mm:ss");
+
 
     /**
      * Constructor.
@@ -31,9 +30,7 @@ public class BukkitLogHandler  extends Handler {
     @Override
     public void publish(LogRecord record) {
 
-        Date date = new Date(record.getMillis());
-
-        String time = _dateFormatter.format(date);
+        String time = RemoteConsolePlugin.formatTime(record.getMillis());
 
         String line = '[' + time + "] [" + record.getLevel().getName() + "] " + record.getMessage();
 

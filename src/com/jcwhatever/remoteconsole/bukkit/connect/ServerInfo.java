@@ -1,40 +1,48 @@
-package com.jcwhatever.remoteconsole.bukkit;
+package com.jcwhatever.remoteconsole.bukkit.connect;
 
+import com.jcwhatever.nucleus.mixins.INamedInsensitive;
 import com.jcwhatever.nucleus.storage.IDataNode;
 import com.jcwhatever.nucleus.utils.PreCon;
 
 /**
  * Storage container for a console viewer connection info.
  */
-public class ServerConnection {
+public class ServerInfo implements INamedInsensitive {
 
     private final String _name;
+    private final String _searchName;
     private final IDataNode _dataNode;
     private int _timeout = 5000;
     private String _serverAddress;
     private int _port = 54555;
+    private boolean _isStartupConnect;
 
     /**
      * Constructor.
      *
      * @param dataNode  The data node that stores the server info.
      */
-    public ServerConnection(String name, IDataNode dataNode) {
+    public ServerInfo(String name, IDataNode dataNode) {
         PreCon.notNullOrEmpty(name);
         PreCon.notNull(dataNode);
 
         _name = name;
+        _searchName = name.toLowerCase();
         _dataNode = dataNode;
         _timeout = dataNode.getInteger("timeout", _timeout);
         _serverAddress = dataNode.getString("address");
         _port = dataNode.getInteger("port", _port);
+        _isStartupConnect = dataNode.getBoolean("startup");
     }
 
-    /**
-     * Get the viewer name.
-     */
+    @Override
     public String getName() {
         return _name;
+    }
+
+    @Override
+    public String getSearchName() {
+        return _searchName;
     }
 
     /**
@@ -93,6 +101,26 @@ public class ServerConnection {
         _port = port;
 
         _dataNode.set("port", port);
+        _dataNode.save();
+    }
+
+    /**
+     * Determine if the connection should be established when the plugin is
+     * first enabled.
+     */
+    public boolean isStartupConnect() {
+        return _isStartupConnect;
+    }
+
+    /**
+     * Set the servers startup connection status.
+     *
+     * @param isStartupConnect  True to connect on startup, otherwise false.
+     */
+    public void setStartupConnect(boolean isStartupConnect) {
+        _isStartupConnect = isStartupConnect;
+
+        _dataNode.set("startup", isStartupConnect);
         _dataNode.save();
     }
 }

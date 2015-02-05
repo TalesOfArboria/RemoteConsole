@@ -1,5 +1,7 @@
 package com.jcwhatever.remoteconsole.bukkit;
 
+import com.jcwhatever.remoteconsole.bukkit.connect.ConnectionManager;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Formatter;
