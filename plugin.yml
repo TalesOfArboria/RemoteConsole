@@ -1,0 +1,5 @@
+name: RemoteConsole
+author: JCThePants
+main: com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin
+version: 0.0-beta
+depend: [NucleusFramework]
