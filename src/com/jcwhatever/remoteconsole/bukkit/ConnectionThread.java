@@ -9,6 +9,7 @@ import com.jcwhatever.nucleus.utils.Utils;
 import com.jcwhatever.remoteconsole.data.ConsoleCommand;
 import com.jcwhatever.remoteconsole.data.LogLine;
 import com.jcwhatever.remoteconsole.data.LogText;
+import com.jcwhatever.remoteconsole.data.ServerClosed;
 
 import java.io.IOException;
 import java.util.Queue;
@@ -44,6 +45,7 @@ public class ConnectionThread implements Runnable {
         kryo.register(LogText.class);
         kryo.register(LogLine.class);
         kryo.register(ConsoleCommand.class);
+        kryo.register(ServerClosed.class);
 
         _thread = new Thread(this);
     }
@@ -76,11 +78,25 @@ public class ConnectionThread implements Runnable {
 
                 if (received instanceof ConsoleCommand) {
 
+                    ConsoleCommand cmd = (ConsoleCommand)received;
+
+                    if (cmd.command == null)
+                        return;
+
                     System.out.println("Executing command as console from " +
                             connection + ' ' + connection.getRemoteAddressTCP() + ": " +
-                            ((ConsoleCommand) received).command);
+                            cmd.command);
 
-                    Utils.executeAsConsole(((ConsoleCommand) received).command);
+                    Utils.executeAsConsole(cmd.command);
+                }
+                else if (received instanceof ServerClosed) {
+
+                    System.out.println("Remote console at " + connection + ' ' + connection.getRemoteAddressTCP() + " disconnected.");
+
+                    connection.close();
+                    _client.stop();
+                    _client.close();
+                    _thread.interrupt();
                 }
             }
         });

@@ -7,6 +7,7 @@ import com.esotericsoftware.kryonet.Server;
 import com.jcwhatever.remoteconsole.data.ConsoleCommand;
 import com.jcwhatever.remoteconsole.data.LogLine;
 import com.jcwhatever.remoteconsole.data.LogText;
+import com.jcwhatever.remoteconsole.data.ServerClosed;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -68,6 +69,7 @@ public class Main {
         kryo.register(LogText.class);
         kryo.register(LogLine.class);
         kryo.register(ConsoleCommand.class);
+        kryo.register(ServerClosed.class);
 
         try {
             server.bind(port);
@@ -79,7 +81,19 @@ public class Main {
         System.out.println("Listening on port " + port + '.');
         System.out.println("Press Ctrl+C to end the program.");
 
-        final Map<Connection, Void> _connections = new WeakHashMap<>(3);
+        final Map<Connection, Void> connections = new WeakHashMap<>(3);
+
+
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (Connection connection : connections.keySet()) {
+                    connection.sendTCP(new ServerClosed());
+                }
+            }
+        }));
+
 
         // add listener
         server.addListener(new Listener() {
@@ -91,7 +105,7 @@ public class Main {
                         " CONNECTED]-----------------------------#");
                 System.out.println();
 
-                _connections.put(connection, null);
+                connections.put(connection, null);
             }
 
             @Override
@@ -101,16 +115,15 @@ public class Main {
                         " DISCONNECTED]--------------------------#");
                 System.out.println();
 
-                _connections.remove(connection);
+                connections.remove(connection);
             }
 
             @Override
-            public void received (Connection connection, Object object) {
+            public void received(Connection connection, Object object) {
                 if (object instanceof LogText) {
 
                     System.out.print(((LogText) object).text);
-                }
-                else if (object instanceof LogLine) {
+                } else if (object instanceof LogLine) {
                     System.out.println(((LogLine) object).text);
                 }
             }
@@ -126,7 +139,7 @@ public class Main {
                 // allow sending commands back to server if console
                 String input = console.readLine();
 
-                for (Connection connection : _connections.keySet()) {
+                for (Connection connection : connections.keySet()) {
                     if (connection.isConnected()) {
                         connection.sendTCP(new ConsoleCommand(input));
                     }
@@ -142,9 +155,6 @@ public class Main {
                 }
             }
         }
-
-        server.stop();
-        server.close();
     }
 
     /**
