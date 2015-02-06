@@ -174,11 +174,18 @@ public class ConnectionThread implements Runnable {
 
             // send queued text to viewers
             while (!_queue.isEmpty()) {
+
                 Object message = _queue.remove();
                 _client.sendTCP(message);
+
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    break;
+                }
             }
 
-            // sleep for 1 second.
+            // sleep for 1 second
             try {
                 Thread.sleep(1000);
             }

@@ -44,7 +44,11 @@ public class BukkitLogHandler  extends Handler {
             PrintWriter writer = new PrintWriter(stringWriter);
             throwable.printStackTrace(writer);
 
-            _manager.sendLine(stringWriter.toString());
+            String[] lines = stringWriter.toString().split("\n");
+
+            for (String exceptionLine : lines) {
+                _manager.sendLine(exceptionLine);
+            }
         }
     }
 
