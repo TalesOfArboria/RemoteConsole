@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.jcwhatever.nucleus.utils.PreCon;
+import com.jcwhatever.nucleus.utils.Scheduler;
 import com.jcwhatever.nucleus.utils.Utils;
 import com.jcwhatever.nucleus.utils.observer.result.FutureResultAgent;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
@@ -145,17 +146,22 @@ public class ConnectionThread implements Runnable {
 
                 if (received instanceof ConsoleCommand) {
 
-                    ConsoleCommand cmd = (ConsoleCommand)received;
+                    final ConsoleCommand cmd = (ConsoleCommand) received;
 
                     if (cmd.command == null)
                         return;
-
 
                     out("Executing command as console from " +
                             connection + ' ' + connection.getRemoteAddressTCP() + ": " +
                             cmd.command);
 
-                    Utils.executeAsConsole(cmd.command);
+                    Scheduler.runTaskSync(RemoteConsolePlugin.getPlugin(), new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.executeAsConsole(cmd.command);
+                        }
+                    });
+
                 }
                 else if (received instanceof ServerClosed) {
 
