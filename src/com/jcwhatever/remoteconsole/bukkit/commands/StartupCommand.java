@@ -4,7 +4,7 @@ import com.jcwhatever.nucleus.commands.AbstractCommand;
 import com.jcwhatever.nucleus.commands.CommandInfo;
 import com.jcwhatever.nucleus.commands.arguments.CommandArguments;
 import com.jcwhatever.nucleus.commands.exceptions.CommandException;
-import com.jcwhatever.nucleus.utils.language.Localizable;
+import com.jcwhatever.nucleus.managed.language.Localizable;
 import com.jcwhatever.remoteconsole.bukkit.Lang;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
 import com.jcwhatever.remoteconsole.bukkit.connect.ConnectionManager;

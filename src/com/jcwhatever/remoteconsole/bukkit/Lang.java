@@ -1,6 +1,6 @@
 package com.jcwhatever.remoteconsole.bukkit;
 
-import com.jcwhatever.nucleus.utils.language.Localized;
+import com.jcwhatever.nucleus.managed.language.Localized;
 
 /**
  * Static convenience methods for localization.
@@ -19,6 +19,6 @@ public class Lang {
      */
     @Localized
     public static String get(String text, Object... args) {
-        return RemoteConsolePlugin.getPlugin().getLanguageManager().get(text, args);
+        return RemoteConsolePlugin.getPlugin().getLanguageContext().get(text, args);
     }
 }
