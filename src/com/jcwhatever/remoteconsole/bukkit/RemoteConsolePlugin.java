@@ -2,7 +2,12 @@ package com.jcwhatever.remoteconsole.bukkit;
 
 import com.jcwhatever.nucleus.NucleusPlugin;
 import com.jcwhatever.nucleus.utils.text.TextColor;
-import com.jcwhatever.remoteconsole.bukkit.commands.Dispatcher;
+import com.jcwhatever.remoteconsole.bukkit.commands.AddCommand;
+import com.jcwhatever.remoteconsole.bukkit.commands.ConnectCommand;
+import com.jcwhatever.remoteconsole.bukkit.commands.DelCommand;
+import com.jcwhatever.remoteconsole.bukkit.commands.DisconnectCommand;
+import com.jcwhatever.remoteconsole.bukkit.commands.ListCommand;
+import com.jcwhatever.remoteconsole.bukkit.commands.StartupCommand;
 import com.jcwhatever.remoteconsole.bukkit.connect.ConnectionManager;
 
 import org.bukkit.Bukkit;
@@ -84,7 +89,13 @@ public class RemoteConsolePlugin extends NucleusPlugin {
         _logHandler = new BukkitLogHandler(_manager);
         Bukkit.getLogger().addHandler(_logHandler);
 
-        registerCommands(new Dispatcher(this));
+        registerCommand(AddCommand.class);
+        registerCommand(ConnectCommand.class);
+        registerCommand(DelCommand.class);
+        registerCommand(DisconnectCommand.class);
+        registerCommand(ListCommand.class);
+        registerCommand(StartupCommand.class);
+
         registerEventListeners(new BukkitListener());
     }
 

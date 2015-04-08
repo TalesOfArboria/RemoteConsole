@@ -1,9 +1,10 @@
 package com.jcwhatever.remoteconsole.bukkit.commands;
 
-import com.jcwhatever.nucleus.commands.AbstractCommand;
-import com.jcwhatever.nucleus.commands.CommandInfo;
-import com.jcwhatever.nucleus.commands.arguments.CommandArguments;
-import com.jcwhatever.nucleus.commands.exceptions.CommandException;
+import com.jcwhatever.nucleus.managed.commands.CommandInfo;
+import com.jcwhatever.nucleus.managed.commands.arguments.ICommandArguments;
+import com.jcwhatever.nucleus.managed.commands.exceptions.CommandException;
+import com.jcwhatever.nucleus.managed.commands.mixins.IExecutableCommand;
+import com.jcwhatever.nucleus.managed.commands.utils.AbstractCommand;
 import com.jcwhatever.nucleus.managed.language.Localizable;
 import com.jcwhatever.remoteconsole.bukkit.Lang;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
@@ -21,7 +22,7 @@ import org.bukkit.command.CommandSender;
                 "true|false= 'true' to auto connect to the remote console when " +
                         "the server starts. Otherwise 'false'."
         })
-public class StartupCommand extends AbstractCommand {
+public class StartupCommand extends AbstractCommand implements IExecutableCommand {
 
     @Localizable static final String _SERVER_NOT_FOUND =
             "A remote console server named '{0: server name}' was not found.";
@@ -34,7 +35,7 @@ public class StartupCommand extends AbstractCommand {
             "Remote console server '{0: server name}' auto connect disabled.";
 
     @Override
-    public void execute(final CommandSender sender, CommandArguments args) throws CommandException {
+    public void execute(final CommandSender sender, ICommandArguments args) throws CommandException {
 
         String serverName = args.getName("serverName", 64);
         boolean isStartupConnect = args.getBoolean("true|false");

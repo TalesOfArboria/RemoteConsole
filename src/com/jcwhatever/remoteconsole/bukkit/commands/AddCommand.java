@@ -1,9 +1,10 @@
 package com.jcwhatever.remoteconsole.bukkit.commands;
 
-import com.jcwhatever.nucleus.commands.AbstractCommand;
-import com.jcwhatever.nucleus.commands.CommandInfo;
-import com.jcwhatever.nucleus.commands.arguments.CommandArguments;
-import com.jcwhatever.nucleus.commands.exceptions.CommandException;
+import com.jcwhatever.nucleus.managed.commands.CommandInfo;
+import com.jcwhatever.nucleus.managed.commands.arguments.ICommandArguments;
+import com.jcwhatever.nucleus.managed.commands.exceptions.CommandException;
+import com.jcwhatever.nucleus.managed.commands.mixins.IExecutableCommand;
+import com.jcwhatever.nucleus.managed.commands.utils.AbstractCommand;
 import com.jcwhatever.nucleus.managed.language.Localizable;
 import com.jcwhatever.remoteconsole.bukkit.Lang;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
@@ -21,7 +22,7 @@ import org.bukkit.command.CommandSender;
                 "address= The address of the remote console server.",
                 "port= The port number of the remote console server."
         })
-public class AddCommand extends AbstractCommand {
+public class AddCommand extends AbstractCommand implements IExecutableCommand {
 
     @Localizable static final String _SERVER_EXISTS =
             "A remote console server named '{0: server name}' already exists.";
@@ -33,7 +34,7 @@ public class AddCommand extends AbstractCommand {
             "Remote console server '{0: server name}' added.";
 
     @Override
-    public void execute(final CommandSender sender, CommandArguments args) throws CommandException {
+    public void execute(final CommandSender sender, ICommandArguments args) throws CommandException {
 
         String serverName = args.getName("serverName", 64);
         String address = args.getString("address");
