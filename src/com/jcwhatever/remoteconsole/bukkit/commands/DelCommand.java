@@ -42,10 +42,8 @@ public class DelCommand extends AbstractCommand implements IExecutableCommand {
         final ConnectionManager manager = RemoteConsolePlugin.getConnectionManager();
 
         ServerInfo info = manager.get(serverName);
-        if (info == null) {
-            tellError(sender, Lang.get(_SERVER_NOT_FOUND, serverName));
-            return; // finish
-        }
+        if (info == null)
+            throw new CommandException(Lang.get(_SERVER_NOT_FOUND, serverName));
 
         manager.disconnect(serverName)
                 .onResult(new FutureSubscriber<ConnectionThread>() {

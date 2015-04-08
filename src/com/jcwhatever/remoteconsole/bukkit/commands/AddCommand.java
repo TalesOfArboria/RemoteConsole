@@ -43,16 +43,12 @@ public class AddCommand extends AbstractCommand implements IExecutableCommand {
         final ConnectionManager manager = RemoteConsolePlugin.getConnectionManager();
 
         ServerInfo info = manager.get(serverName);
-        if (info != null) {
-            tellError(sender, Lang.get(_SERVER_EXISTS, serverName));
-            return; // finish
-        }
+        if (info != null)
+            throw new CommandException(Lang.get(_SERVER_EXISTS, serverName));
 
         ServerInfo connection = manager.add(serverName, address, port);
-        if (connection == null){
-            tellError(sender, Lang.get(_FAILED, serverName));
-            return; // finish
-        }
+        if (connection == null)
+            throw new CommandException(Lang.get(_FAILED, serverName));
 
         tellSuccess(sender, Lang.get(_SUCCESS, serverName));
     }
