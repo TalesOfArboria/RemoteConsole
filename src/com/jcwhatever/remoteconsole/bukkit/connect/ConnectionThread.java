@@ -7,7 +7,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.jcwhatever.nucleus.utils.PreCon;
 import com.jcwhatever.nucleus.managed.scheduler.Scheduler;
 import com.jcwhatever.nucleus.utils.Utils;
-import com.jcwhatever.nucleus.utils.observer.result.FutureResultAgent;
+import com.jcwhatever.nucleus.utils.observer.future.FutureResultAgent;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
 import com.jcwhatever.remoteconsole.data.ConsoleCommand;
 import com.jcwhatever.remoteconsole.data.LogLine;

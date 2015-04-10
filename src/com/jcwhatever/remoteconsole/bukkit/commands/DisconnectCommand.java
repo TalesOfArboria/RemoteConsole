@@ -6,9 +6,9 @@ import com.jcwhatever.nucleus.managed.commands.exceptions.CommandException;
 import com.jcwhatever.nucleus.managed.commands.mixins.IExecutableCommand;
 import com.jcwhatever.nucleus.managed.commands.utils.AbstractCommand;
 import com.jcwhatever.nucleus.managed.language.Localizable;
-import com.jcwhatever.nucleus.utils.observer.result.FutureResultAgent.Future;
-import com.jcwhatever.nucleus.utils.observer.result.FutureSubscriber;
-import com.jcwhatever.nucleus.utils.observer.result.Result;
+import com.jcwhatever.nucleus.utils.observer.future.FutureResultSubscriber;
+import com.jcwhatever.nucleus.utils.observer.future.IFutureResult;
+import com.jcwhatever.nucleus.utils.observer.future.Result;
 import com.jcwhatever.remoteconsole.bukkit.Lang;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
 import com.jcwhatever.remoteconsole.bukkit.connect.ConnectionManager;
@@ -38,16 +38,16 @@ public class DisconnectCommand extends AbstractCommand implements IExecutableCom
 
         ConnectionManager manager = RemoteConsolePlugin.getConnectionManager();
 
-        Future<ConnectionThread> result = manager.disconnect(serverName);
+        IFutureResult<ConnectionThread> result = manager.disconnect(serverName);
 
         result
-                .onError(new FutureSubscriber<ConnectionThread>() {
+                .onError(new FutureResultSubscriber<ConnectionThread>() {
                     @Override
                     public void on(Result<ConnectionThread> result) {
                         tellError(sender, Lang.get(_SERVER_NOT_FOUND, serverName));
                     }
                 })
-                .onSuccess(new FutureSubscriber<ConnectionThread>() {
+                .onSuccess(new FutureResultSubscriber<ConnectionThread>() {
                     @Override
                     public void on(Result<ConnectionThread> result) {
                         tellSuccess(sender, Lang.get(_SUCCESS, serverName));

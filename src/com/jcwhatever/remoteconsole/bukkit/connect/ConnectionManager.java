@@ -4,8 +4,8 @@ import com.jcwhatever.nucleus.mixins.IDisposable;
 import com.jcwhatever.nucleus.storage.IDataNode;
 import com.jcwhatever.nucleus.utils.PreCon;
 import com.jcwhatever.nucleus.utils.managers.NamedInsensitiveDataManager;
-import com.jcwhatever.nucleus.utils.observer.result.FutureResultAgent;
-import com.jcwhatever.nucleus.utils.observer.result.FutureResultAgent.Future;
+import com.jcwhatever.nucleus.utils.observer.future.FutureResultAgent;
+import com.jcwhatever.nucleus.utils.observer.future.IFutureResult;
 import com.jcwhatever.remoteconsole.data.LogLine;
 import com.jcwhatever.remoteconsole.data.LogText;
 
@@ -86,7 +86,7 @@ public class ConnectionManager extends NamedInsensitiveDataManager<ServerInfo> i
      *
      * @return  A future whose possible results are success or error.
      */
-    public Future<ConnectionThread> connect(String name) {
+    public IFutureResult<ConnectionThread> connect(String name) {
         PreCon.notNull(name);
 
         FutureResultAgent<ConnectionThread> agent = new FutureResultAgent<>();
@@ -114,7 +114,7 @@ public class ConnectionManager extends NamedInsensitiveDataManager<ServerInfo> i
      *
      * @return A future whose possible results are success or error.
      */
-    public Future<ConnectionThread> disconnect(String name) {
+    public IFutureResult<ConnectionThread> disconnect(String name) {
         PreCon.notNull(name);
 
         FutureResultAgent<ConnectionThread> agent = new FutureResultAgent<>();

@@ -6,8 +6,8 @@ import com.jcwhatever.nucleus.managed.commands.exceptions.CommandException;
 import com.jcwhatever.nucleus.managed.commands.mixins.IExecutableCommand;
 import com.jcwhatever.nucleus.managed.commands.utils.AbstractCommand;
 import com.jcwhatever.nucleus.managed.language.Localizable;
-import com.jcwhatever.nucleus.utils.observer.result.FutureSubscriber;
-import com.jcwhatever.nucleus.utils.observer.result.Result;
+import com.jcwhatever.nucleus.utils.observer.future.FutureResultSubscriber;
+import com.jcwhatever.nucleus.utils.observer.future.Result;
 import com.jcwhatever.remoteconsole.bukkit.Lang;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
 import com.jcwhatever.remoteconsole.bukkit.connect.ConnectionManager;
@@ -46,7 +46,7 @@ public class DelCommand extends AbstractCommand implements IExecutableCommand {
             throw new CommandException(Lang.get(_SERVER_NOT_FOUND, serverName));
 
         manager.disconnect(serverName)
-                .onResult(new FutureSubscriber<ConnectionThread>() {
+                .onResult(new FutureResultSubscriber<ConnectionThread>() {
                     @Override
                     public void on(Result<ConnectionThread> result) {
 
