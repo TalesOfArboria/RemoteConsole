@@ -250,7 +250,9 @@ public class ConnectionThread implements Runnable {
                         _connection.getAddress() + ':' + _connection.getPort());
 
                 if (_tries >= 4) {
-                    e.printStackTrace();
+
+                    err("Giving up trying to connect to remove console viewer: " +
+                            _connection.getAddress() + ':' + _connection.getPort());
 
                     if (_connectAgent != null) {
                         _connectAgent.error(this);
