@@ -1,9 +1,6 @@
 package com.jcwhatever.remoteconsole.bukkit;
 
-import com.jcwhatever.nucleus.managed.messaging.ChatPaginator;
 import com.jcwhatever.nucleus.managed.messaging.IMessenger;
-import com.jcwhatever.nucleus.utils.text.TextUtils;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -52,13 +49,9 @@ public class Msg {
 		msg().broadcast(message, params);
 	}
     
-    public static void broadcast(String message, Collection<Player> exclude, Object...params) {
+    public static void broadcast(Collection<? extends Player> exclude, String message, Object...params) {
 		msg().broadcast(exclude, message, params);
 	}
-    
-    public static ChatPaginator getPaginator(String title, Object...params) {
-    	return new ChatPaginator(RemoteConsolePlugin.getPlugin(), 6, TextUtils.format(title, params));
-    }
 
     private static IMessenger msg() {
         return RemoteConsolePlugin.getPlugin().getMessenger();

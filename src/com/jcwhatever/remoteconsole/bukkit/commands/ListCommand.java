@@ -9,11 +9,9 @@ import com.jcwhatever.nucleus.managed.language.Localizable;
 import com.jcwhatever.nucleus.managed.messaging.ChatPaginator;
 import com.jcwhatever.nucleus.utils.text.TextUtils.FormatTemplate;
 import com.jcwhatever.remoteconsole.bukkit.Lang;
-import com.jcwhatever.remoteconsole.bukkit.Msg;
 import com.jcwhatever.remoteconsole.bukkit.RemoteConsolePlugin;
 import com.jcwhatever.remoteconsole.bukkit.connect.ConnectionManager;
 import com.jcwhatever.remoteconsole.bukkit.connect.ServerInfo;
-
 import org.bukkit.command.CommandSender;
 
 import java.util.Collection;
@@ -40,10 +38,10 @@ public class ListCommand extends AbstractCommand implements IExecutableCommand {
 
         Collection<ServerInfo> connections = manager.getAll();
 
-        ChatPaginator pagin = Msg.getPaginator(Lang.get(_PAGINATOR_TITLE));
+        ChatPaginator pagin = createPagin(args, 7, Lang.get(_PAGINATOR_TITLE));
 
-        String connectedLabel = Lang.get(_LABEL_CONNECTED);
-        String disconnectedLabel = Lang.get(_LABEL_DISCONNECTED);
+        String connectedLabel = Lang.get(_LABEL_CONNECTED).toString();
+        String disconnectedLabel = Lang.get(_LABEL_DISCONNECTED).toString();
         for (ServerInfo connection : connections) {
             pagin.add(connection.getName(), manager.isConnected(connection.getName())
                     ? connectedLabel

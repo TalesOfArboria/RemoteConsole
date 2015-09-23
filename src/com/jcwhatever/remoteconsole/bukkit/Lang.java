@@ -1,6 +1,7 @@
 package com.jcwhatever.remoteconsole.bukkit;
 
 import com.jcwhatever.nucleus.managed.language.Localized;
+import com.jcwhatever.nucleus.utils.text.components.IChatMessage;
 
 /**
  * Static convenience methods for localization.
@@ -18,7 +19,7 @@ public class Lang {
      * @return  Localized text.
      */
     @Localized
-    public static String get(String text, Object... args) {
+    public static IChatMessage get(CharSequence text, Object... args) {
         return RemoteConsolePlugin.getPlugin().getLanguageContext().get(text, args);
     }
 }
